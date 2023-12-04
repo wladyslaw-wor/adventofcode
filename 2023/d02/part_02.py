@@ -1,16 +1,14 @@
-import math
-import re
+import re, math
 from collections import defaultdict
 
 with open("input.txt") as f:
     ls = f.read().strip().split("\n")
 
-good_ids = 0
 total_power = 0
-for l in ls:
-    parts = re.sub("[;,:]", "", l).split()
+for line in ls:
+    parts = re.findall(r'(\d+) (\w+)', line)
     colormax = defaultdict(int)
-    for count, color in zip(parts[2::2], parts[3::2]):
+    for count, color in parts:
         colormax[color] = max(colormax[color], int(count))
     total_power += math.prod(colormax.values())
 
